@@ -37,7 +37,7 @@ from parlai.core.message import Message
 from parlai.utils.misc import AttrDict, no_lock, str_to_msg, warn_once
 
 from functools import lru_cache
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 import concurrent.futures
 import multiprocessing
@@ -97,7 +97,7 @@ class DataLoader(Thread):
                 receive_fn(future)
 
 
-class FixedDialogTeacher(Teacher):
+class FixedDialogTeacher(Teacher, ABC):
     """
     A teacher agent for all teachers involved in tasks with fixed data.
 
@@ -428,7 +428,7 @@ class FixedDialogTeacher(Teacher):
         return action
 
 
-class DialogTeacher(FixedDialogTeacher):
+class DialogTeacher(FixedDialogTeacher, ABC):
     """
     A base teacher class for doing dialog with fixed chat logs.
 
@@ -1318,7 +1318,7 @@ class ParlAIDialogTeacher(FixedDialogTeacher):
             self.episodes.append(eps)
 
 
-class AbstractImageTeacher(FixedDialogTeacher):
+class AbstractImageTeacher(FixedDialogTeacher, ABC):
     """
     Abstract class to allow easier creation of image + dialogue tasks.
 

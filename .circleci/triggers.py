@@ -10,10 +10,9 @@ Detects whether specific CircleCI jobs should run.
 You can get CircleCI to run extra tests for your pull request by adding special
 words into your commit messages.
 
-[gpu]: Run the nightly GPU tests
-[mturk]: Run the mturk tests
-[data]: Run the data tests
-[long] or [all]: run all above
+[gpu]: Run the nightly GPU tests.
+[osx]: Run the OS X tests.
+[long] or [all]: run all above.
 """
 
 import parlai.utils.testing as testing_utils
@@ -47,21 +46,8 @@ def detect_gpu():
     return commit_msg or test_changed
 
 
-def detect_data():
-    """
-    Check if we should run data tests.
-    """
-    commit_msg = '[data]' in testing_utils.git_commit_messages().lower()
-    test_changed = any(
-        testing_utils.is_new_task_filename(fn)
-        for fn in testing_utils.git_changed_files()
-    )
-    return commit_msg or test_changed
-
-
 MAPPING = {
     'nightly_gpu_tests': detect_gpu,
-    'datatests': detect_data,
     'unittests_osx': detect_osx,
 }
 

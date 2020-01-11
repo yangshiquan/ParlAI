@@ -247,7 +247,7 @@ class IGCTeacher(AbstractImageTeacher):
         return shared
 
 
-class IGCOneSideTeacher(ABC, IGCTeacher):
+class IGCOneSideTeacher(IGCTeacher, ABC):
     """
     Override to only return one side of the conversation.
     """

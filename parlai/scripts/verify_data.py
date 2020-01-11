@@ -35,7 +35,7 @@ def setup_args(parser=None):
 def report(world, counts, log_time):
     report = world.report()
     log = {
-        'missing_text': counts['missing_text'],
+        'missing_text_and_image': counts['missing_text_and_image'],
         'missing_labels': counts['missing_labels'],
         'missing_label_candidates': counts['missing_label_candidates'],
         'empty_string_label_candidates': counts['empty_string_label_candidates'],
@@ -69,7 +69,7 @@ def verify(opt, printargs=None, print_parser=None):
     log_time = TimeLogger()
 
     counts = {}
-    counts['missing_text'] = 0
+    counts['missing_text_and_image'] = 0
     counts['missing_labels'] = 0
     counts['missing_label_candidates'] = 0
     counts['empty_string_label_candidates'] = 0
@@ -85,9 +85,9 @@ def verify(opt, printargs=None, print_parser=None):
         if not isinstance(act, Message):
             counts['did_not_return_message'] += 1
 
-        if 'text' not in act:
+        if 'text' not in act and 'image' not in act:
             warn("warning: missing text field:\n", act, opt)
-            counts['missing_text'] += 1
+            counts['missing_text_and_image'] += 1
 
         if 'labels' not in act and 'eval_labels' not in act:
             warn("warning: missing labels/eval_labels field:\n", act, opt)

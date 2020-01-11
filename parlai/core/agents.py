@@ -45,6 +45,7 @@ from parlai.core.loader import load_teacher_module, load_agent_module
 from parlai.utils.misc import warn_once
 from parlai.core.opt import Opt, load_opt_file
 from .metrics import Metrics, aggregate_metrics
+import abc
 import copy
 import random
 import os
@@ -274,7 +275,7 @@ class Teacher(Agent):
         return shared
 
 
-class MultiTaskTeacher(Teacher):
+class MultiTaskTeacher(Teacher, abc.ABC):
     """
     MultiTaskTeacher which teaches multiple tasks.
 

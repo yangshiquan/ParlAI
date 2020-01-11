@@ -32,7 +32,7 @@ NUM_TRAIN = 500
 NUM_TEST = 100
 
 
-class CandidateBaseTeacher(Teacher, ABC):
+class _CandidateBaseTeacher(Teacher, ABC):
     """
     Base Teacher.
 
@@ -116,7 +116,7 @@ class CandidateBaseTeacher(Teacher, ABC):
         self.corpus = [' '.join(x) for x in self.corpus]
 
 
-class FixedDialogCandidateTeacher(CandidateBaseTeacher, FixedDialogTeacher):
+class FixedDialogCandidateTeacher(_CandidateBaseTeacher, FixedDialogTeacher):
     """
     Base Candidate Teacher.
 
@@ -162,7 +162,7 @@ class FixedDialogCandidateTeacher(CandidateBaseTeacher, FixedDialogTeacher):
         }
 
 
-class CandidateTeacher(CandidateBaseTeacher, DialogTeacher):
+class CandidateTeacher(_CandidateBaseTeacher, DialogTeacher):
     """
     Candidate teacher produces several candidates, one of which is a repeat of the
     input.
@@ -486,7 +486,10 @@ class RepeatTeacher(DialogTeacher):
         opt = copy.deepcopy(opt)
         opt['datafile'] = 'unused_path'
         task = opt.get('task', 'integration_tests:RepeatTeacher:50')
-        self.data_length = int(task.split(':')[-1])
+        try:
+            self.data_length = int(task.split(':')[-1])
+        except ValueError:
+            self.data_length = 50
         super().__init__(opt, shared)
 
     def setup_data(self, unused_path):
