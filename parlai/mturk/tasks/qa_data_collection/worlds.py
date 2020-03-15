@@ -48,7 +48,8 @@ class QADataCollectionWorld(MTurkTaskWorld):
 
     def parley(self):
         # Each turn starts from the QA Collector agent
-        self.turn_index = (self.turn_index + 1) % 2
+        # self.turn_index = (self.turn_index + 1) % 2
+        self.turn_index = self.turn_index + 1
         ad = {'episode_done': False}
         ad['id'] = self.__class__.collector_agent_id
 
