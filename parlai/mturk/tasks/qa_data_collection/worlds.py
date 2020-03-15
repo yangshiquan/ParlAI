@@ -61,9 +61,15 @@ class QADataCollectionWorld(MTurkTaskWorld):
             qa = self.task.act()
             self.context = '\n'.join(qa['text'].split('\n')[:-1])
 
+            context_list = self.context.split('\n')
+            table = "<table border=\"1\"><tr> <td>{}, {}</td> <td>{}, {}</td> </tr> <tr> <td>{}, {}</td> <td>{}, {}</td> </tr> </table>".format(context_list[0], context_list[1], context_list[2], context_list[3])
+
             # Wrap the context with a prompt telling the turker what to do next
+            # ad['text'] = (
+            #     self.context + '\n\nPlease provide a question given this context.'
+            # )
             ad['text'] = (
-                self.context + '\n\nPlease provide a question given this context.'
+                context_list + '\n\nPlease provide a question given this context.'
             )
 
             img = self.image_loader.load(
