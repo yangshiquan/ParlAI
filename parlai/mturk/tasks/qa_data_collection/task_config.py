@@ -9,7 +9,7 @@ from typing import Dict, Any
 task_config: Dict[str, Any] = {}
 
 
-task_config['frontend_version'] = 1
+# task_config['frontend_version'] = 1
 
 """A short and descriptive title about the kind of task the HIT contains.
 On the Amazon Mechanical Turk web site, the HIT title appears in search results,
