@@ -77,7 +77,7 @@ class QADataCollectionWorld(MTurkTaskWorld):
             self.question = self.mturk_agent.act()
             # Can log the turker's question here
 
-        if self.turn_index >= 2 and self.turn_index < 5:
+        if self.turn_index >= 1 and self.turn_index < 5:
             # At the second turn, the QA Collector collects the turker's
             # question from the first turn, and then prompts the
             # turker to provide the answer
