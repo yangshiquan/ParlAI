@@ -5,6 +5,9 @@
 # LICENSE file in the root directory of this source tree.
 from parlai.core.worlds import validate
 from parlai.mturk.core.worlds import MTurkOnboardWorld, MTurkTaskWorld
+from parlai.core.image_featurizers import ImageLoader
+from io import BytesIO
+import base64
 
 
 class QADataCollectionOnboardWorld(MTurkOnboardWorld):
@@ -41,6 +44,7 @@ class QADataCollectionWorld(MTurkTaskWorld):
         self.context = None
         self.question = None
         self.answer = None
+        self.image_loader = ImageLoader(opt)
 
     def parley(self):
         # Each turn starts from the QA Collector agent
@@ -60,6 +64,13 @@ class QADataCollectionWorld(MTurkTaskWorld):
             ad['text'] = (
                 self.context + '\n\nPlease provide a question given this context.'
             )
+
+            img = self.image_loader.load(
+                "/Users/shiquan/PycharmProjects/ParlAI/parlai/mturk/tasks/qa_data_collection/banana.jpg")
+            buffered = BytesIO()
+            img.save(buffered, format="JPEG")
+            encoded = str(base64.b64encode(buffered.getvalue()).decode('ascii'))
+            ad['image'] = encoded
 
             self.mturk_agent.observe(validate(ad))
             self.question = self.mturk_agent.act()
